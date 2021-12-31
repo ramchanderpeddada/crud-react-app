@@ -1,14 +1,23 @@
-import {Dialog, DialogContent, DialogContentText} from '@material-ui/core'
-import React, {useState} from 'react'
+import {
+	Dialog,
+	DialogContent,
+	DialogContentText,
+	DialogActions,
+	Button,
+} from '@material-ui/core'
+import React, {useEffect} from 'react'
+import {deleteUser} from '../Service/Link'
 
-const Dialogue = () => {
-	const [open, setOpen] = useState(false)
-	const openClickHandler = () => {
-		setOpen(true)
+const Dialogue = ({open, closeClickHandler}) => {
+	useEffect(() => {
+		getAllUsers()
+	}, [])
+
+	const deleteFunction = async (id) => {
+		await deleteUser(id)
+		getAllUsers()
 	}
-	const closeClickHandler = () => {
-		setOpen(false)
-	}
+
 	return (
 		<div>
 			<Dialog open={open} onClose={closeClickHandler}>
@@ -18,8 +27,8 @@ const Dialogue = () => {
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={handleClose}>Yes</Button>
-					<Button onClick={handleClose}>No</Button>
+					<Button onClick={deleteFunction}>Yes</Button>
+					<Button>No</Button>
 				</DialogActions>
 			</Dialog>
 		</div>
